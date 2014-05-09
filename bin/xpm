@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require "thor"
+require "xpm"
+
+class XpmCli < Thor
+
+  desc "new [NAME]", "Create a new project called NAME in the current directory"
+  option :packages
+  def new(name)
+    xp = XPM::XP.new()
+    xp.new(name, :packages => options[:packages])
+  end
+
+  desc "install", "install a package locally" 
+  def install(package=nil)
+    xp = XPM::XP.new()
+    xp.install(package)
+  end
+
+end
+
+XpmCli.start(ARGV)
