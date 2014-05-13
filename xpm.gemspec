@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["msimonin"]
   spec.email         = ["matthieu.simonin@inria.fr"]
   spec.summary       = "xpm is a command line tool to control capi5k"
-  spec.description   = "xpm is a command line tool to control capi5k"
+  spec.description   = "xpm is a command line tool to control capi5k."
   spec.homepage      = "https://capi5k.github.io/capi5k"
   spec.license       = "MIT"
 
@@ -22,6 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency('json', '~> 1.8')
 
   spec.add_development_dependency "bundler", "~> 1.6"
-  spec.add_development_dependency "rake"
 
 end
