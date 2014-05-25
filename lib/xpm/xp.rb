@@ -63,7 +63,7 @@ module XPM
       # TODO hook postinstall (@depmanager.postinstall)
       # for now loop over bower_components/* and export
       # files to ./exports/<module name>/.
-      mpath = "bower_components"
+      mpath = "xpm_modules"
       bowers = Dir.glob("#{mpath}/*");
 
       # TODO rescue
