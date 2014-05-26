@@ -72,13 +72,15 @@ module XPM
         desc = JSON.parse(desc)
         mname = File.basename(bower)
         exports = desc["exports"]
-        @logger.debug exports
+        @logger.debug "exporting files for #{mname}" 
         exports.each do |export|
           source_file = File.join(bower, export)
-          destination_directory = File.join("exports", mname, export)
+          destination_file = File.join("exports", mname, export)
+          destination_directory = File.dirname(destination_file)
           FileUtils.mkdir_p destination_directory
-          if (!File.exist?(destination_directory))
-            FileUtils.cp source_file, destination_directory
+          if (!File.exist?(destination_file))
+            @logger.debug "exporting #{export}" 
+            FileUtils.cp source_file, destination_file
           end
         end unless exports.nil?
       end
