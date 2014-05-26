@@ -18,6 +18,11 @@ class XpmCli < Thor
     xp.install(package)
   end
 
+  desc "version", "gives the current version"
+  def version
+    puts XPM::VERSION
+  end
+
 end
 
 XpmCli.start(ARGV)

@@ -5,7 +5,7 @@ require 'xpm/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "xpm"
-  spec.version       = Xpm::VERSION
+  spec.version       = XPM::VERSION
   spec.authors       = ["msimonin"]
   spec.email         = ["matthieu.simonin@inria.fr"]
   spec.summary       = "xpm is a command line tool to control capi5k"
