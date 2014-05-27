@@ -1,5 +1,15 @@
-require "xpm/version"
-require "xpm/xp"
+module XPM
 
-module Xpm
+  class << self
+
+    attr_accessor :config
+
+    def config
+      @@config ||= Configuration.new
+    end
+
+  end
+
 end
+
+require 'xpm/all'

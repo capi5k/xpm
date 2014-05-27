@@ -3,26 +3,48 @@
 require "thor"
 require "xpm"
 
-class XpmCli < Thor
 
-  desc "new [NAME]", "Create a new project called NAME in the current directory"
-  option :packages
-  def new(name)
-    xp = XPM::XP.new()
-    xp.new(name, :packages => options[:packages])
+
+  class Cache < Thor
+
+    desc "clean", "Clean cached packages"
+    def clean()
+      XPM.config.depmanager.new.cacheclean()
+    end
+
+    desc "list", "List cached packages"
+    def list()
+      XPM.config.depmanager.new.cachelist()
+    end
   end
 
-  desc "install", "install a package locally" 
-  def install(package=nil)
-    xp = XPM::XP.new()
-    xp.install(package)
+
+  class XPMCli < Thor
+
+    desc "new [NAME]", "Create a new project called NAME in the current directory"
+    option :packages
+    def new(name)
+      xp = XPM::XP.new()
+      xp.new(name, :packages => options[:packages])
+    end
+
+    desc "install [package]", "Install a package locally" 
+    def install(package=nil)
+      XPM.config.depmanager.new.install(package)
+    end
+
+    desc "link [package]", "Symlink a package folder"
+    def link(package=nil)
+      XPM.config.depmanager.new.link(package)
+    end
+
+    desc "version", "gives the current version"
+    def version
+      puts XPM::VERSION
+    end
+
+    desc "cache", "Manage cache "
+    subcommand "cache", Cache
   end
 
-  desc "version", "gives the current version"
-  def version
-    puts XPM::VERSION
-  end
-
-end
-
-XpmCli.start(ARGV)
+XPMCli.start(ARGV)

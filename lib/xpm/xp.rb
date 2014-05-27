@@ -8,7 +8,6 @@ require 'fileutils'
 module XPM
   class XP
 
-
     def initialize(options = {})
       @logger = options[:logger] || Logger.new(STDOUT)
     end
@@ -46,46 +45,6 @@ module XPM
       @logger.info "New project initialized"
 
     end # init
-
-    def install(package = nil)
-      
-      # TODO @depmanager.preinstall ?
-
-      cmd = 'bower install ' + package.to_s
-      # TODO abstract this (@depmanager.install)
-      Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
-        @logger.info "installing dependencies"
-        @logger.info stdout.read
-        err = stderr.read
-        @logger.error err unless err.empty?
-      end
-
-      # TODO hook postinstall (@depmanager.postinstall)
-      # for now loop over bower_components/* and export
-      # files to ./exports/<module name>/.
-      mpath = "xpm_modules"
-      bowers = Dir.glob("#{mpath}/*");
-
-      # TODO rescue
-      bowers.each do |bower|
-        desc = File.read(File.join(bower, "bower.json"))
-        desc = JSON.parse(desc)
-        mname = File.basename(bower)
-        exports = desc["exports"]
-        @logger.debug "exporting files for #{mname}" 
-        exports.each do |export|
-          source_file = File.join(bower, export)
-          destination_file = File.join("exports", mname, export)
-          destination_directory = File.dirname(destination_file)
-          FileUtils.mkdir_p destination_directory
-          if (!File.exist?(destination_file))
-            @logger.debug "exporting #{export}" 
-            FileUtils.cp source_file, destination_file
-          end
-        end unless exports.nil?
-      end
-
-    end # install
 
   end
 end
