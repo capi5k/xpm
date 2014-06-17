@@ -52,7 +52,9 @@ module XPM
         end
       end
 
-
+      def export
+        _postinstall
+      end
 
       private
 

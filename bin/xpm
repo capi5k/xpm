@@ -38,6 +38,11 @@ require "xpm"
       XPM.config.depmanager.new.link(package)
     end
 
+    desc "export", "Perform the exports from existing installed packages"
+    def export()
+      XPM.config.depmanager.new.export()
+    end
+
     desc "version", "gives the current version"
     def version
       puts XPM::VERSION

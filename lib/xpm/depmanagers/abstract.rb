@@ -20,6 +20,10 @@ module XPM
         raise MethodUnavailableError
       end
 
+      def export
+        raise MethodUnavailableError
+      end
+
     end
 
   end
