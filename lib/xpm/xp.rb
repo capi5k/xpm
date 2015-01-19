@@ -12,9 +12,21 @@ module XPM
       @logger = options[:logger] || Logger.new(STDOUT)
     end
     
+    def init(name)
+      install("simple", name)
+      rvm(name)
+    end
+
     def new(name, *args)
-      tarball = "master.tar.gz"
-      url = "https://github.com/capi5k/capi5k-init/tarball/master"
+      install("master", name)
+      rvm(name)
+    end
+
+    private 
+
+    def install(branch, name)
+      tarball = "#{branch}.tar.gz"
+      url = "https://github.com/capi5k/capi5k-init/tarball/#{branch}"
 
       @logger.info "Downloading project skeleton"
       # begin / rescue...
@@ -24,7 +36,7 @@ module XPM
         end
       end
 
-      cmd = 'tar -xvzf master.tar.gz'
+      cmd = "tar -xvzf #{branch}.tar.gz"
       Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
         @logger.info "Extracting project skeleton"
         err = stderr.read
@@ -45,6 +57,13 @@ module XPM
       @logger.info "New project initialized"
 
     end # init
+
+    def rvm(name)
+      File.open("#{name}/.ruby-version", 'w') { |file| file.write("#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}") }
+      File.open("#{name}/.ruby-gemset", 'w') { |file| file.write("capi5k-#{name}") }
+    end
+
+
 
   end
 end

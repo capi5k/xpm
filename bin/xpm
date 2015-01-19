@@ -21,7 +21,17 @@ require "xpm"
 
   class XPMCli < Thor
 
-    desc "new [NAME]", "Create a new project called NAME in the current directory"
+    # This create a simple project (not a module)
+    # It is introduced in v 0.0.6 since I realized that self contained projects
+    # are easier to maintain and more reusable...
+    desc "init [NAME]", "Create a new xp5k project called NAME in the current directory"
+    def init(name)
+      xp = XPM::XP.new()
+      xp.init(name)
+    end
+  
+    # This create a new module project (legacy)
+    desc "new [NAME]", "Create a new module project called NAME in the current directory"
     option :packages
     def new(name)
       xp = XPM::XP.new()
